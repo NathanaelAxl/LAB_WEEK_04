@@ -9,38 +9,37 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // set toolbar
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        // setup nav host
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // top-level destination (menu utama)
+        // Top level destinations
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.listFragment,
-                R.id.favoritesFragment
+                R.id.listFragment, R.id.favoritesFragment, R.id.cafeFragment
             ),
             findViewById(R.id.drawer_layout)
         )
 
-        // pasang ke action bar
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // pasang ke navigation drawer
-        findViewById<NavigationView>(R.id.nav_view)
-            .setupWithNavController(navController)
+        // Drawer NavigationView
+        val drawerNavView = findViewById<NavigationView>(R.id.nav_view)
+        drawerNavView?.setupWithNavController(navController)
+
+        // Bottom NavigationView
+        val bottomNavView = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        bottomNavView?.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
